@@ -100,14 +100,26 @@
   .card .sub{color:var(--muted);font-size:12.5px;margin:0 0 16px}
   code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12px}
 
+  /* ================= AREA UPLOAD DIPERKECIL (1 CM) ================= */
   .drop{
-    border:2px dashed #cbd5e1;border-radius:14px;padding:34px 20px;text-align:center;
-    background:#f8fafc;transition:.18s;cursor:pointer;display:block;
+    border:2px dashed #cbd5e1;
+    border-radius:8px;
+    padding:8px 20px; /* Padding diperkecil */
+    background:#f8fafc;
+    transition:.18s;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    height:42px; /* Tinggi dikunci sekitar 1 cm */
   }
   .drop:hover,.drop.over{border-color:#c00000;background:#fef2f2}
-  .drop .ico{font-size:34px;line-height:1;margin-bottom:10px}
-  .drop b{display:block;font-size:14.5px;margin-bottom:4px}
-  .drop span{font-size:12.5px;color:var(--muted)}
+  .drop .ico{font-size:18px;line-height:1;margin:0}
+  .drop b{font-size:13px; margin:0;}
+  .drop span{display:none;} /* Teks penjelasan disembunyikan agar ringkas */
+  /* ================================================================= */
+
   input[type=file]{display:none}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
@@ -229,6 +241,113 @@
     background:#fef2f2;border:1px solid #fecaca;color:#991b1b;
   }
   .settings-note .ico{font-size:16px;line-height:1.2;flex-shrink:0}
+
+  /* =========================================================================
+     TAMPILAN RESPONSIF UNTUK HP / TABLET (LAYAR KECIL)
+     ========================================================================= */
+  @media (max-width: 768px) {
+    /* Padding layar disesuaikan */
+    .wrap { padding: 12px 10px 40px; }
+
+    /* Header ditumpuk vertikal */
+    .app-header { 
+      flex-direction: column; 
+      height: auto; 
+      border-radius: 10px;
+    }
+    .logo-box { 
+      justify-content: center; 
+      padding: 12px; 
+      font-size: 20px;
+    }
+    .header-title { 
+      padding: 12px 15px; 
+      justify-content: center; 
+      text-align: center; 
+      white-space: normal; 
+      font-size: 14px; 
+      line-height: 1.4;
+    }
+    .header-right { 
+      clip-path: none; 
+      padding: 12px; 
+      justify-content: center; 
+      width: 100%;
+    }
+
+    /* Tab Menu bisa di-scroll horizontal */
+    .tabs { 
+      overflow-x: auto; 
+      padding-bottom: 5px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab { 
+      flex-shrink: 0; 
+      padding: 10px 16px; 
+      font-size: 12.5px;
+    }
+    .tab .badge { display: none; } /* Sembunyikan badge di HP agar hemat ruang */
+
+    /* Form & Grid 1 Kolom */
+    .grid { 
+      grid-template-columns: 1fr; 
+    }
+    .field[style*="grid-column:span 2"] { 
+      grid-column: span 1 !important; 
+    }
+
+    /* Area Upload menyesuaikan */
+    .drop { 
+      height: auto; 
+      min-height: 50px; 
+      padding: 12px; 
+      flex-direction: column; 
+      text-align: center; 
+    }
+    .drop span { display: block; font-size: 11px; margin-top: 4px; }
+
+    /* Tombol Export & Hapus memenuhi lebar layar */
+    #sheetBox-tap1, #sheetBox-tap2 { 
+      flex-direction: column; 
+      align-items: stretch !important; 
+    }
+    #sheetBox-tap1 .field, #sheetBox-tap2 .field { 
+      width: 100%; 
+      max-width: none !important; 
+    }
+    #sheetBox-tap1 .actions, #sheetBox-tap2 .actions { 
+      justify-content: center !important; 
+      flex-direction: column; 
+      width: 100%;
+    }
+    #sheetBox-tap1 .actions button, #sheetBox-tap2 .actions button { 
+      width: 100%; 
+      margin-top: 8px; 
+    }
+    
+    /* Action Tombol Filter */
+    .actions { 
+      flex-direction: column; 
+      align-items: stretch; 
+    }
+    .actions button { 
+      width: 100%; 
+    }
+    .chk { 
+      justify-content: flex-start; 
+      margin-bottom: 8px;
+    }
+
+    /* Statistik Pill */
+    .stats { justify-content: center; }
+    .pill { font-size: 11px; padding: 5px 12px; }
+    
+    /* Kartu TAP 3 */
+    .link-grid { grid-template-columns: 1fr; }
+    
+    /* Kotak Tabel menyesuaikan tinggi layar HP */
+    .tablebox { max-height: 50vh; }
+  }
 </style>
 </head>
 <body>
@@ -537,7 +656,7 @@ class TabController {
         <h2>1. Unggah File Excel — ${cfg.label}</h2>
         <label class="drop" id="drop-${p}" for="file-${p}" style="margin-top:6px">
           <div class="ico">📄</div>
-          <b>Klik untuk memilih file, atau tarik &amp; lepas di sini</b>
+          <b>Klik untuk memilih file Excel, atau tarik &amp; lepas di sini</b>
           <span>File diproses sepenuhnya di browser Anda — tidak diunggah ke server.</span>
         </label>
         <input type="file" id="file-${p}" accept=".xlsx,.xls,.xlsm,.csv" />
